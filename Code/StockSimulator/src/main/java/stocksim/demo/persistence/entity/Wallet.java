@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name="enrollments")
+@Table(name="wallets")
 public class Wallet {
 
     @Id
@@ -21,8 +21,8 @@ public class Wallet {
     @Column
     Integer balance;
 
-    @Column
-    Stock stock;
+    @OneToMany(mappedBy = "wallet")
+    private List<Stock> stockList;
 
     @Override
     public String toString() {
@@ -30,7 +30,7 @@ public class Wallet {
                 "walletid=" + walletid +
                 ", trader=" + trader +
                 ", balance=" + balance +
-                ", stock=" + stock +
+                ", stock=" + stockList +
                 '}';
     }
 
@@ -58,11 +58,11 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public Stock getStock() {
-        return stock;
+    public List<Stock> getStock() {
+        return stockList;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setStock(List<Stock> stockList) {
+        this.stockList = stockList;
     }
 }
