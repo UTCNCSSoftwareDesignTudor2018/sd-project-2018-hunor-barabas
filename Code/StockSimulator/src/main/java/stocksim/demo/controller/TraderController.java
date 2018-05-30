@@ -35,11 +35,11 @@ public class TraderController {
         return mav;
     }
 
-   /* @RequestMapping(value = "/trader{id}",method = RequestMethod.POST)
+   /* @RequestMapping(value = "/trader/{id}",method = RequestMethod.POST)
     public ModelAndView viewCourses(@PathVariable String id, @ModelAttribute(value="walletid") @RequestParam Integer walletid)
     {
 
-        return new ModelAndView("redirect:/trader{id}/wallet{walletid}");
+        return new ModelAndView("redirect:/trader/{id}/wallet/{walletid}");
     }
     */
 
