@@ -28,4 +28,9 @@ public class TraderService {
             System.out.println("No such trader");
         }
     }
+
+    public void validateTrader(Trader trader){
+
+
+    }
 }
