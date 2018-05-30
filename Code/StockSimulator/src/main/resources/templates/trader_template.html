@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+
+<table  border="1">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Balances</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="wallet : ${wallets}">
+        <td th:text="${wallet.walletid}">ID</td>
+        <td th:text="${wallet.balance}">balance</td>
+    </tr>
+    </tbody>
+</table>
+
+<form  method="post">
+    <div class="col-sm-12">
+        <label>Wallet:</label>
+        <input placeholder="Enter Wallet ID" name="inId"/>
+    </div>
+    <button type="submit" class = "btn btn-primary">Show Wallet</button>
+</form>
+
+</body>
+</html>

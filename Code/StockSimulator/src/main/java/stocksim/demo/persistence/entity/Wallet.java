@@ -21,10 +21,14 @@ public class Wallet {
     @Column
     Integer balance;
 
-    @OneToMany(mappedBy = "wallet")
-    private List<Stock> stockList;
+    @ManyToOne
+    @JoinColumn(name = "stockid")
+    private Stock stock;
 
-    @Override
+    @Column
+    Integer amount;
+
+    /*@Override
     public String toString() {
         return "Wallet{" +
                 "walletid=" + walletid +
@@ -32,6 +36,15 @@ public class Wallet {
                 ", balance=" + balance +
                 ", stock=" + stockList +
                 '}';
+    }
+    */
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public Integer getWalletid() {
@@ -58,11 +71,11 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public List<Stock> getStock() {
-        return stockList;
+    public Stock getStock() {
+        return stock;
     }
 
-    public void setStock(List<Stock> stockList) {
-        this.stockList = stockList;
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 }

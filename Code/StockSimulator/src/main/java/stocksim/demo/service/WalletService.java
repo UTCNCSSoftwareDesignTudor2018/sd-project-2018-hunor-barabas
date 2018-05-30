@@ -6,6 +6,8 @@ import stocksim.demo.persistence.entity.Trader;
 import stocksim.demo.persistence.entity.Wallet;
 import stocksim.demo.persistence.repository.WalletRepo;
 
+import java.util.List;
+
 @Service
 public class WalletService {
 
@@ -18,6 +20,11 @@ public class WalletService {
         Wallet wallet = new Wallet();
         wallet.setBalance(1000);
         wallet.setTrader(trader);
-        walletRepo.save(wallet);}
+        walletRepo.save(wallet);
+    }
+
+    public List<Wallet> findByTrader(Trader trader){
+        return walletRepo.findByTrader(trader);
+    }
 
 }
