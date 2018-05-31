@@ -12,8 +12,11 @@ public class OrderValidator implements Validator<Order> {
     public void validate(Order order) {
         Integer amount = order.getAmount();
         Wallet wallet = order.getWallet();
+        Stock stock = order.getStock();
+        StockData data = stock.getStockData().get(1);
 
-        if(wallet.getBalance() < amount * 10){
+
+        if(wallet.getBalance() < amount * data.getPrice()){
             throw new IllegalArgumentException("Not enough money to buy stock");
         }
 

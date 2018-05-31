@@ -1,4 +1,4 @@
-package stocksim.demo.config;
+/*package stocksim.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,3 +47,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+*/

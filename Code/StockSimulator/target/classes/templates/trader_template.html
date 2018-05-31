@@ -2,33 +2,192 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Trader</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 </head>
 <body>
 
-<table  border="1">
-    <thead>
+<div class="container">
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Trader Info
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" th:text="${trader.name}">Name</li>
+        <li class="list-group-item" th:text="${trader.username}">Username</li>
+        <li class="list-group-item" th:text="${trader.password}">Name</li>
+        <li class="list-group-item" th:text="${trader.getWalletList().size()}">Open Wallets</li>
+    </ul>
+</div>
+</div>
+
+<div class="container">
+    <h2>Wallets</h2>
+<table class="table table-striped">
+    <thead class="thead-dark">
     <tr>
         <th>Id</th>
         <th>Balances</th>
+        <th>Stock</th>
+        <th>Amount</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="wallet : ${wallets}">
         <td th:text="${wallet.walletid}">ID</td>
         <td th:text="${wallet.balance}">balance</td>
+        <td th:text="${wallet.getStock().symbol}">No Stock</td>
+        <td th:text="${wallet.amount}">0</td>
     </tr>
     </tbody>
 </table>
+</div>
 
-<form  method="post">
-    <div class="col-sm-12">
-        <label>Wallet:</label>
-        <input placeholder="Enter Wallet ID" name="inId"/>
-    </div>
-    <button type="submit" class = "btn btn-primary">Show Wallet</button>
+<div class="container">
+    <h2>Available Stocks</h2>
+    <table  class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Balance</th>
+            <th>Current Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stock : ${stocks}">
+            <td th:text="${stock.stockid}">ID</td>
+            <td th:text="${stock.symbol}">balance</td>
+            <td th:text="${stock.getStockData().get(1).getPrice()}">price</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+<form method="post" action="/trader/1">
+    Stock id: <input type="text" name="stockid" value=""><br>
+    <input type="submit" value="Create Wallet", name="Create Wallet"/>
 </form>
+</div>
+
+<div class="container">
+    <form method="post" action="/trader/1">
+        Wallet id: <input type="text" name="walletid" value=""><br>
+        Amount: <input type="text" name="amount" value=""><br>
+        <input type="submit" value="Buy", name="Buy"/>
+    </form>
+</div>
+
+<div class="container">
+    <form method="post" action="/trader/1">
+        Wallet id: <input type="text" name="walletid" value=""><br>
+        Amount: <input type="text" name="amount" value=""><br>
+        <input type="submit" value="Sell", name="Sell"/>
+    </form>
+</div>
+
+
+<div class="container">
+    <h2>Buy</h2>
+    <form>
+        <div class="form-group">
+            <label for="controlSelect1">Wallet</label>
+            <select class="form-control" id="controlSelect1">
+                <option>1</option>
+                <option>2</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="buyForm">Amount</label>
+            <input type="text" class="form-control" id="buyForm" name = "amount" placeholder="Amount to Buy">
+        </div>
+        <button type="submit" class="btn btn-primary" name="Buy">Buy</button>
+    </form>
+</div>
+
+<div class="container">
+    <h2>Sell</h2>
+    <form>
+        <div class="form-group">
+            <label for="controlSelect3">Wallet</label>
+            <select class="form-control" id="controlSelect3">
+                <option>1</option>
+                <option>2</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sellForm">Amount</label>
+            <input type="text" class="form-control" id="sellForm" placeholder="Amount to Sell">
+        </div>
+        <button type="submit" class="btn btn-primary">Sell</button>
+    </form>
+</div>
+
+<div class="container">
+    <h2>Price of BTC</h2>
+    <canvas id="myChart"></canvas>
+</div>
+
+<div class="container">
+    <h2>Price of ETH</h2>
+    <canvas id="myChart2"></canvas>
+</div>
+
+<div class="container">
+    <h2>Price of XVG</h2>
+    <canvas id="myChart3"></canvas>
+</div>
+
+<script th:inline="javascript">
+    let myChart = document.getElementById('myChart').getContext('2d');
+    let myChart2 = document.getElementById('myChart2').getContext('2d');
+    let myChart3 = document.getElementById('myChart3').getContext('2d');
+
+    let btcChart = new Chart(myChart, {
+        type:'line',
+        data:{
+            labels:['2018-05-28','2018-05-29','2018-05-30','2018-05-31'],
+            datasets:[{
+                label:'Price',
+                data: [ 85, 86, 87, 86]
+            }]
+        },
+        options:{}
+    });
+
+    let ethChart = new Chart(myChart2, {
+        type:'line',
+        data:{
+            labels:['2018-05-28','2018-05-29','2018-05-30','2018-05-31'],
+            datasets:[{
+                label:'Price',
+                data: [ 23, 24, 22, 26]
+            }]
+        },
+        options:{}
+    });
+
+    let xvgChart = new Chart(myChart3, {
+        type:'line',
+        data:{
+            labels:['2018-05-28','2018-05-29','2018-05-30','2018-05-31'],
+            datasets:[{
+                label:'Price',
+                data: [ 7, 3, 5, 9]
+            }]
+        },
+        options:{}
+    });
+</script>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 </body>
 </html>
